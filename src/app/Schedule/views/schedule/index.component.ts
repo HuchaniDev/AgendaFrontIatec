@@ -5,6 +5,8 @@ import { Schedule } from "../../models/schedule.interface";
 import { log } from "console";
 import { FormsModule } from "@angular/forms";
 import { User } from "../../models/User.interface";
+import { UserService } from "../../services/user.service";
+import { Person } from "../../models/Person.interface";
 
 @Component({
   selector: "app-schedule",
@@ -16,38 +18,17 @@ import { User } from "../../models/User.interface";
 })
 export default class ScheduleComponent {
   #scheduleService = inject(ScheduleService);
+  #userService = inject(UserService);
   title = "Schedule";
 
-  users:User[]=[
-    {
-      id:0,
-      name:"daniel",
-      lastName:"huchani Huaranca"
-    },
-    {
-      id:1,
-      name:"daniel2",
-      lastName:"huchani Huaranca"
-    },
-    {
-      id:2,
-      name:"daniel3",
-      lastName:"huchani Huaranca"
-    }
-
-  ]
-
-  user:User = {
-    id:0,
-    name:"daniel",
-    lastName:"huchani Huaranca"
-  }
-
-  userId = 1;
+  users:User[]=[];
+  userId = 0;
   schdules:Schedule[] = [];
+  participants:Person[] = [];
 
   constructor() {
     //this.getSchedule();
+    this.getUsers();
   }
   
   getSchedule() {
@@ -63,6 +44,27 @@ export default class ScheduleComponent {
         this.schdules = [];
       }
     });
+  }
+
+  getUsers(){
+    this.#userService.getUsers$().subscribe({
+      next: (response:ResponseInterface<User[]>) => {
+        console.log(response);        
+        this.users = response.data;
+        if(response.data.length > 0){
+          this.userId = response.data[0].id;
+          this.getSchedule();
+        }
+      },
+      error: (error) => {
+        console.log("error",error);
+        this.users = [];
+      }
+    });
+  }
+
+  showParticipants(schedule:Schedule){
+    this.participants = schedule.participants;
   }
 
   

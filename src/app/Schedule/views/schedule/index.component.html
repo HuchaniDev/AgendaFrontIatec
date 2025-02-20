@@ -6,7 +6,7 @@
         <img class="w-12 border-2 border-red-950 rounded-full" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" alt="">
       </div>
       <div class="min-w-36">
-        <select class="w-full" [(ngModel)]="userId">
+        <select class="w-full" [(ngModel)]="userId" (change)="getSchedule()">
           @for (user of users; track $index) {
 
             <option [value]="user.id">
@@ -14,6 +14,9 @@
             </option>
           }
         </select>        
+      </div>
+      <div class="container w-fit">
+        <button class="bg-cyan-500 rounded-md px-2 p-1">+</button>
       </div>
     </div>
   </div>
@@ -23,14 +26,15 @@
     <div class="w-[600px] h-full bg-sky-500/90 rounded-md">
       <h3 class="bg-cyan-600 ">Eventos</h3>
       <div class="h-full space-y-2 overflow-y-auto p-2">
-        @for (event of [1,1,1,1]; track $index) {
-          <div class="flex-col rounded-md bg-white justify-between items-center p-2 hover:shadow-md hover:bg-cyan-300">
-            <h1>Ir al parque</h1>
-            <p class="px-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat suscipit fuga corporis voluptatibus, eaque vero ipsa architecto magni ratione odit cupiditate odio fugit fugiat quos delectus debitis. Rerum, quidem officiis.</p>
+        @for (event of schdules; track $index) {
+          <div class="flex-col rounded-md bg-white justify-between items-center p-2 hover:shadow-md hover:bg-cyan-300"
+          (click)="showParticipants(event)">
+            <h1>{{event.eventName}}</h1>
+            <p class="px-2">{{event.description}}</p>
             <div class="flex justify-between items-center">
               <div>
-                <h4>Fecha: 12/23/23</h4>
-                <h4>Lugar: plaza central</h4>
+                <h4>Fecha: {{event.date }}</h4>
+                <h4>Lugar: {{event.location}}</h4>
               </div>
               <div class="flex items-end gap-2">
                 <button class="bg-cyan-500 rounded-md px-1">Editar</button>
@@ -45,13 +49,13 @@
     <div class="w-[600px] h-full bg-sky-500/90 rounded-md">
       <h3 class="bg-cyan-600 ">Participantes</h3>
       <div class="h-full space-y-2 overflow-y-auto p-2">
-        @for (event of [1,1,1,1]; track $index) {
+        @for (person of participants; track $index) {
           <div class="flex-col rounded-md bg-white items-center p-2 hover:shadow-md hover:bg-cyan-300">
-            <h1>Daniel Huchani Huaranca</h1>
+            <h1>{{person.name}} {{person.lastName}}</h1>
             <div class="flex items-center justify-between">
               <div class="flex gap-2">
-                <h3>ci: 1231</h3>
-                <h3>ci: 1231</h3>
+                <h3>ci: {{person.ci}}</h3>
+                <h3></h3>
               </div>
 
               <div class="flex items-end gap-2">
