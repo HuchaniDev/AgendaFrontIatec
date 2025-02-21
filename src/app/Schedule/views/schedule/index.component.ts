@@ -7,13 +7,15 @@ import { FormsModule } from "@angular/forms";
 import { User } from "../../models/User.interface";
 import { UserService } from "../../services/user.service";
 import { Person } from "../../models/Person.interface";
+import { CommonModule, NgClass } from "@angular/common";
 
 @Component({
   selector: "app-schedule",
   standalone: true,
   templateUrl: "./index.component.html",
   imports: [
-    FormsModule
+    FormsModule,
+    CommonModule,
   ]
 })
 export default class ScheduleComponent {
@@ -23,6 +25,7 @@ export default class ScheduleComponent {
 
   users:User[]=[];
   userId = 0;
+  selectedEventId = 0;  
   schdules:Schedule[] = [];
   participants:Person[] = [];
 
@@ -65,6 +68,7 @@ export default class ScheduleComponent {
 
   showParticipants(schedule:Schedule){
     this.participants = schedule.participants;
+    this.selectedEventId= schedule.id; 
   }
 
   

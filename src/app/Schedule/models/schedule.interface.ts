@@ -6,5 +6,6 @@ export interface Schedule {
   description:string,
   date:Date,
   location:string,
+  selected:boolean|false,
   participants:Person[]
 }

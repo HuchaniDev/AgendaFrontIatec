@@ -24,10 +24,19 @@
   <div class="flex-1 flex justify-center gap-2">
 
     <div class="w-[600px] h-full bg-sky-500/90 rounded-md">
-      <h3 class="bg-cyan-600 ">Eventos</h3>
+      <h3 class="bg-cyan-600 text-xl text-center font-semibold rounded-t-md">Eventos</h3>
+      <div class="flex justify-between items-center p-2 gap-4">
+        <input type="date" class="w-full p-2 rounded-md" placeholder="Buscar evento">
+        <input type="time" class="w-full p-2 rounded-md" placeholder="Buscar evento">
+        <button class="bg-cyan-600 rounded-md py-3 px-8 font-semibold hover:shadow-md hover:shadow-cyan-300 ">Buscar</button>
+      </div>
       <div class="h-full space-y-2 overflow-y-auto p-2">
         @for (event of schdules; track $index) {
-          <div class="flex-col rounded-md bg-white justify-between items-center p-2 hover:shadow-md hover:bg-cyan-300"
+          <div class="flex-col rounded-md justify-between items-center p-2 hover:shadow-md hover:bg-cyan-300"
+          [ngClass]="{
+              'bg-cyan-300': event.id == selectedEventId,
+              'bg-white': event.id != selectedEventId
+          }"
           (click)="showParticipants(event)">
             <h1>{{event.eventName}}</h1>
             <p class="px-2">{{event.description}}</p>
@@ -47,7 +56,7 @@
     </div>
     
     <div class="w-[600px] h-full bg-sky-500/90 rounded-md">
-      <h3 class="bg-cyan-600 ">Participantes</h3>
+      <h3 class="bg-cyan-600 font-semibold rounded-t-md text-xl text-center">Participantes</h3>
       <div class="h-full space-y-2 overflow-y-auto p-2">
         @for (person of participants; track $index) {
           <div class="flex-col rounded-md bg-white items-center p-2 hover:shadow-md hover:bg-cyan-300">
